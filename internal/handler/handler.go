@@ -63,7 +63,8 @@ func (h *Handler) OnMessage(socket *gws.Conn, message *gws.Message) {
 		return
 	}
 
-	broadcaster := gws.NewBroadcaster(gws.OpcodeText, message.Bytes())
+	payload := fmt.Sprintf("%s: %s", userID, message.Bytes())
+	broadcaster := gws.NewBroadcaster(gws.OpcodeText, []byte(payload))
 	defer broadcaster.Close()
 
 	for receiverID, conn := range h.connectedClients {

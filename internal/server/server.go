@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -24,6 +25,10 @@ func (s *Server) Start(port string) {
 		PermessageDeflate: gws.PermessageDeflate{Enabled: true},
 	})
 
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("pong"))
+	})
+
 	http.HandleFunc("/connect", func(writer http.ResponseWriter, req *http.Request) {
 		socket, err := upgrader.Upgrade(writer, req)
 		if err != nil {
@@ -36,5 +41,5 @@ func (s *Server) Start(port string) {
 
 	log.Printf("starting websocket server on port: %s", port)
 
-	http.ListenAndServe(port, nil)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
