@@ -9,7 +9,7 @@ import (
 )
 
 type Server struct {
-	handler handler
+	handler gws.Event
 }
 
 func New(handler handler) *Server {
