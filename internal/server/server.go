@@ -12,7 +12,7 @@ type Server struct {
 	handler gws.Event
 }
 
-func New(handler handler) *Server {
+func New(handler gws.Event) *Server {
 	return &Server{
 		handler: handler,
 	}
